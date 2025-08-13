@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;700;800&family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
     
     <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="docs/styles.css">
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <!-- Header -->
@@ -119,9 +119,13 @@
                 </div>
             </section>
 
+
+
+
             <!-- Blog Section -->
             <section id="blog" class="section">
-                  <form action="/add-blog" method="POST">
+                  <form action="/" method="POST">
+                    <input type="hidden" name ="form_name" value ="blog_form">
                     <label for="title">Title</label>
                       <input type="text" id="title" name="title" required>
 
@@ -129,6 +133,14 @@
                       <textarea id="content" name="content" required></textarea>
        <button type="submit">Post Blog</button>
    </form>
+                <!-- get posts -->
+                {%for title , content , time in POSTS%}
+                <li>
+                    <h3> {{title}} </h3>
+                    <p>{{content}}</p>
+                    <small>{{time}}</small>
+                </li>
+                {% endfor %}
                 <h2 class="section-title">Blog</h2>
                 <div class="blog-posts">
                     <article class="blog-post">
@@ -147,6 +159,10 @@
                     </article>
                 </div>
             </section>
+
+
+
+
 
             <!-- Team Section -->
             <section id="team" class="section">
