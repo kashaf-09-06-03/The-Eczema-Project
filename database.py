@@ -15,18 +15,29 @@ def create_table():
 def add_posts(Title , Content):
     con =sqlite3.connect("database.db")
     cur=con.cursor()
-    cur.execute("INSERT INTO posts (title , content )  VALUES (? ,?)", (Title , Content))
+    cur.execute( "INSERT INTO posts (title , content )  VALUES (? ,?)", (Title , Content))
     con.commit()
     con.close()   
 
 def get_posts():
     con=sqlite3.connect("database.db")
     cur=con.cursor()
-    cur.execute("SELECT title , content , time FROM posts ORDER BY time DESC")
-
+    cur.execute("SELECT id , title , content , time FROM posts ORDER BY time DESC")
     posts=cur.fetchall()
     con.commit()
     con.close()
-    
     return posts 
     
+def delet_posts(post_id):
+    con=sqlite3.connect("database.db")
+    cur=con.cursor()
+    cur.execute("DELETE FROM posts WHERE id=?", (post_id,))
+    con.commit()
+    con.close()
+    
+def search(search_query):
+    con=sqlite3.connect("database.db")
+    cur=con.cursor()
+    cur.execute("SELECT id, title, content, time FROM posts WHERE title LIKE ? ORDER BY time DESC" ,('%'+search_query+'%' ,))
+    result=cur.fetchall()
+    return result
