@@ -1,11 +1,20 @@
 from flask import Flask
 from flask import render_template , request , redirect , url_for , session
 from database import create_table , add_posts , get_posts , delet_posts ,search
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 create_table()
 app.secret_key="A(K>2V)QBNP),@#81ado?<welb++Qq"
+
+upload_floder="static/uploads"
+allowed_extensions={"png","jpg","jpeg","gif"}
+app.config["UPLOAD_FOLDER"]=upload_floder    
         
+def allowed_file(name):
+    return '.' in name and name.rsplit('.',1)[1].lower() in allowed_extensions       
+          
 @app.route("/" , methods=["GET" , "POST"])
 def main():
     if request.method =="POST":
@@ -13,7 +22,15 @@ def main():
         if form_name == "blog_form":
             title=request.form["title"]
             content=request.form["content"]
-            add_posts(Content=content , Title=title)
+            file=request.files.get("image")
+            
+            image_path=None
+            if file and allowed_file(file.filename):
+                safe_file=secure_filename(file.filename)
+                file.save(os.path.join(app.config["UPLOAD_FOLDER"] ,safe_file))
+                image_path=f"uploads/{safe_file}"
+
+            add_posts(Content=content , Title=title , image=image_path)
             return redirect(url_for("main"))
     search_query=request.args.get("search")
     if search_query:

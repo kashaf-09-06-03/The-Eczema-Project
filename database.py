@@ -6,23 +6,24 @@ def create_table():
     cur.execute(''' CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT ,
             title TEXT NOT NULL ,
             content TEXT NOT NULL ,
+            image TEXT,
             time DATETIME DEFAULT CURRENT_TIMESTAMP)  
             ''')
     # cur.execute("DELETE FROM posts") 
-    con.commit()
+    con.commit() 
     con.close()
     
-def add_posts(Title , Content):
+def add_posts(Title , Content , image=None):
     con =sqlite3.connect("database.db")
     cur=con.cursor()
-    cur.execute( "INSERT INTO posts (title , content )  VALUES (? ,?)", (Title , Content))
+    cur.execute( "INSERT INTO posts (title , content ,image)  VALUES (? ,?,?)", (Title , Content,image))
     con.commit()
     con.close()   
 
 def get_posts():
     con=sqlite3.connect("database.db")
     cur=con.cursor()
-    cur.execute("SELECT id , title , content , time FROM posts ORDER BY time DESC")
+    cur.execute("SELECT id , title , content , image, time FROM posts ORDER BY time DESC")
     posts=cur.fetchall()
     con.commit()
     con.close()
