@@ -84,6 +84,7 @@
                     innovative projects, and collaborative initiatives. We envision a world where everyone with eczema 
                     can access the knowledge and resources they need to manage their condition effectively and live a fulfilling life.
                 </p>
+
             </section>
 
             <!-- Resources Section -->
@@ -123,6 +124,51 @@
                         </div>
                     </article>
                 </div>
+                {% if admin %}
+                <form method="POST" enctype="multipart/form-data" action="/addproject">
+                    <label>text</label>
+                    <input type="text" name="title" required>
+                    <br>
+                    <label>Content</label>
+                    <textarea name="content"></textarea>
+                    <br>
+                    <label>Upload image</label>
+                    <input type="file" name="image" accept="image/*">
+                    <br>
+                    <label>Upload Audio</label>
+                    <input type="file" name="audio" accept="audio/*">
+                    <br>
+                    <label>Upload PDF</label>
+                    <input type="file" name="pdf" accept=".pdf">
+                    <button type="submit">submit</button>
+                </form>
+                {% endif %}
+                <!-- get projects -->
+                {% for id, title, content, image, pdf, audio, time in PROJECT %}
+                <li>
+                    <h3> {{title}} </h3>
+                    <p>{{content}}</p>
+                    <small>{{time}}</small>
+                </li>
+                {% if image %}
+                    <img src="{{ url_for('static', filename=image) }}" alt="Blog Image" style="max-width:300px;">
+                {% endif %}
+                {% if audio %}
+                    <audio controls>
+                    <source src="{{ url_for('static', filename=audio) }}" type="audio/mpeg">
+                    </audio>                
+                {% endif %}
+                {% if pdf %}
+                    <a href="{{ url_for('static', filename=pdf) }}" target="_blank">Open PDF</a>                
+                {% endif %}
+
+                {%if admin%}
+                    <form method="POST" action="/deleteProject/{{id}}">
+                        <button type="submit">delete</button>
+                    </form>
+                {%endif%}
+                
+                {% endfor %}
             </section>
 
 
