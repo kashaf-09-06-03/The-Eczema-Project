@@ -47,7 +47,7 @@ def delet_posts(post_id):
 def search(search_query):
     con=sqlite3.connect("database.db")
     cur=con.cursor()
-    cur.execute("SELECT id, title, content, time FROM posts WHERE title LIKE ? ORDER BY time DESC" ,('%'+search_query+'%' ,))
+    cur.execute("SELECT id, title, content, image time FROM posts WHERE title LIKE ? ORDER BY time DESC" ,('%'+search_query+'%' ,))
     result=cur.fetchall()
     return result
 

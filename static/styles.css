@@ -43,8 +43,10 @@ body {
 }
 
 .logo-icon {
-    width: 16px;
-    height: 16px;
+    width: 100px;  
+    height: 100px; 
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .brand-title {
@@ -82,6 +84,7 @@ body {
 
 .search-container {
     display: flex;
+    align-items: center;
     min-width: 160px;
     max-width: 256px;
     height: 40px;
@@ -93,9 +96,10 @@ body {
 .search-icon {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-left: 16px;
+    justify-content: right;
+    padding-right: 15px;
     color: #734e97;
+    padding-left: 10px;
 }
 
 .search-input {
@@ -110,24 +114,6 @@ body {
 
 .search-input::placeholder {
     color: #734e97;
-}
-
-.cta-button {
-    background-color: #9947eb;
-    color: #faf8fc;
-    border: none;
-    border-radius: 8px;
-    padding: 0 16px;
-    height: 40px;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.015em;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.cta-button:hover {
-    background-color: #8238d4;
 }
 
 /* Main Content */
@@ -154,7 +140,7 @@ body {
 
 .hero-content {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%), 
-                      url("https://lh3.googleusercontent.com/aida-public/AB6AXuDPuygFZyfa0Z2xi49iL3e4xr_BoOnO31_iHCp4QErsKFer_B5jB2k1rYd7uOxhxkQ0w_VH0AeH4E31oPVCTco_gz4Eiu0gBt7-iWwWkCdMMortBVMol9jDWkHQr-3aF93vTLsNz-QA7PCrsKXOaM13YVBqSMbmmEPqrRztGFDCsunM2nAXJPM_sNbKZqQ_XdzqkldhCJwZYzlKonuwUIyV0AZWfKfHiNkpTXnQ9WGAvZkVLXUpNI2WMPP9z-w2qScKY9Kn2MjrnE7X");
+                      url("/static/uploads/banner2.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -170,7 +156,7 @@ body {
 
 .hero-title {
     color: white;
-    font-size: 40px;
+    font-size: 60px;
     font-weight: 800;
     line-height: 1.2;
     letter-spacing: -0.033em;
@@ -342,44 +328,57 @@ body {
     flex: 1;
 }
 
-/* Team Grid */
-.team-grid {
+/* Team Section */
+.uploads {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
-    gap: 12px;
-    padding: 16px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    justify-items: center;
 }
 
-.team-member {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
-    padding-bottom: 12px;
-}
-
-.member-photo {
-    width: 100%;
-    aspect-ratio: 1;
-    background-size: cover;
+.img-box {
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+    border-radius: 20%;
+    background-size: contain;
     background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 50%;
-    margin: 0 16px;
+    position: relative;
+    transition: width 1.0s, height 1.0s;
 }
 
-.member-name {
-    color: #140e1b;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.5;
+/* individual backgrounds remain same */
+.img-box:nth-child(1) { background: url(uploads/member1.png) center/contain no-repeat; }
+.img-box:nth-child(2) { background: url(uploads/member2.png) center/contain no-repeat; }
+.img-box:nth-child(3) { background: url(uploads/member3.png) center/contain no-repeat; }
+.img-box:nth-child(4) { background: url(uploads/member4.png) center/contain no-repeat; }
+.img-box:nth-child(5) { background: url(uploads/member5.png) center/contain no-repeat; }
+.img-box:nth-child(6) { background: url(uploads/member6.png) center/contain no-repeat; }
+.img-box:nth-child(7) { background: url(uploads/member7.png) center/contain no-repeat; }
+.img-box:nth-child(8) { background: url(uploads/member8.png) center/contain no-repeat; }
+
+.img-box h3 {
+    color: #fff;
+    -webkit-text-stroke: 0.5px #000;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    font-size: small;
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+    opacity: 0.5;
+    transition: bottom 1.0s, opacity 1.0s, font-size 1.0s;
 }
 
-.member-role {
-    color: #734e97;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.5;
+.img-box:hover {
+    width: 400px;
+    height: 450px;
+    cursor: pointer;
+}
+
+.img-box:hover h3 {
+    opacity: 1;
+    bottom: 20px;
+    font-size: xx-large;
 }
 
 /* Contact Form */
@@ -506,6 +505,9 @@ body {
     .main-content {
         padding: 20px 80px;
     }
+    .uploads {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
@@ -513,34 +515,34 @@ body {
         flex-wrap: wrap;
         gap: 16px;
     }
-    
     .main-nav {
         gap: 24px;
     }
-    
     .main-content {
         padding: 20px 40px;
     }
-    
     .hero-content {
         padding: 24px;
         min-height: 320px;
     }
-    
     .hero-title {
         font-size: 32px;
     }
-    
     .blog-post {
         flex-direction: column;
     }
-    
     .post-content {
         flex: 1;
     }
-    
     .post-image {
         min-height: 200px;
+    }
+    .uploads {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .img-box h3 {
+        opacity: 1; /* text always visible on mobile */
+        font-size: medium;
     }
 }
 
@@ -550,34 +552,101 @@ body {
         align-items: stretch;
         gap: 12px;
     }
-    
     .brand-section {
         justify-content: center;
         flex-wrap: wrap;
         gap: 16px;
     }
-    
     .main-nav {
         justify-content: center;
         flex-wrap: wrap;
         gap: 16px;
     }
-    
     .header-actions {
         justify-content: center;
         gap: 16px;
     }
-    
     .main-content {
         padding: 20px 16px;
     }
-    
     .hero-content {
         padding: 16px;
         gap: 16px;
     }
-    
     .hero-title {
         font-size: 28px;
+    }
+    .uploads {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Popular US Smartphones Responsive Tweaks --- */
+
+/* iPhone 14/15 Pro Max & large Androids (~430px) */
+@media (max-width: 430px) {
+    .hero-title {
+        font-size: 24px;
+    }
+    .main-content {
+        padding: 16px 12px;
+    }
+    .nav-container {
+        padding: 10px 16px;
+    }
+    .logo-icon {
+        width: 72px;
+        height: 72px;
+    }
+}
+
+/* iPhone 14/15, Pixel 7/8, Galaxy S23 (~390px) */
+@media (max-width: 390px) {
+    .hero-title {
+        font-size: 22px;
+    }
+    .hero-content {
+        padding: 12px;
+        gap: 12px;
+    }
+    .main-nav {
+        gap: 12px;
+    }
+    .resource-grid,
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* iPhone SE (3rd gen) & small Androids (~375px) */
+@media (max-width: 375px) {
+    .hero-title {
+        font-size: 20px;
+    }
+    .nav-link {
+        font-size: 13px;
+    }
+    .search-container {
+        min-width: auto;
+        max-width: 100%;
+    }
+    .uploads {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Very small devices (~320px) */
+@media (max-width: 320px) {
+    .hero-title {
+        font-size: 18px;
+    }
+    .brand-title {
+        font-size: 16px;
+    }
+    .nav-link {
+        font-size: 12px;
+    }
+    .hero-content {
+        min-height: 240px;
     }
 }
