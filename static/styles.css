@@ -328,6 +328,121 @@ body {
     flex: 1;
 }
 
+/* Detail Page Styles */
+.blog-detail, .project-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.blog-header, .project-header {
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 1px solid #ede7f3;
+    padding-bottom: 20px;
+}
+
+.blog-title, .project-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #140e1b;
+    margin-bottom: 10px;
+}
+
+.blog-date, .project-date {
+    color: #734e97;
+    font-size: 14px;
+}
+
+.blog-image-container, .project-image-container {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.blog-detail-image, .project-detail-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.blog-content, .project-content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #140e1b;
+    margin: 30px 0;
+}
+
+.project-media {
+    margin: 30px 0;
+}
+
+.audio-section, .pdf-section {
+    margin: 20px 0;
+}
+
+.audio-section h3, .pdf-section h3 {
+    font-size: 18px;
+    color: #140e1b;
+    margin-bottom: 10px;
+}
+
+.pdf-link {
+    color: #9947eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.pdf-link:hover {
+    text-decoration: underline;
+}
+
+.admin-actions {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.back-to-blog, .back-to-projects {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.back-link {
+    color: #9947eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Homepage Link Styles */
+.project-link, .blog-link {
+    color: #140e1b;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.project-link:hover, .blog-link:hover {
+    color: #9947eb;
+}
+
+
 /* Team Section */
 .uploads {
     display: grid;
@@ -585,6 +700,9 @@ body {
 
 /* iPhone 14/15 Pro Max & large Androids (~430px) */
 @media (max-width: 430px) {
+        body {
+        margin-left: 80px; /* shift everything right */
+    }
     .hero-title {
         font-size: 24px;
     }

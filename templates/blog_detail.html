@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post[1] }} - The Eczema Project</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;700;800&family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="nav-container">
+            <!-- Logo and Brand -->
+            <div class="brand-section">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='uploads/logo.png') }}" alt="The Eczema Project Logo" class="logo-icon">
+                    <h1 class="brand-title">The Eczema Project</h1>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="main-nav">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/#about" class="nav-link">About Us</a>
+                    <a href="/#team" class="nav-link">Meet the Team</a>
+                    <a href="/#projects" class="nav-link">Projects</a>
+                    <a href="/#blog" class="nav-link">Blog</a>
+                    <a href="/#contact" class="nav-link">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Blog Post Detail -->
+            <article class="blog-detail">
+                <header class="blog-header">
+                    <h1 class="blog-title">{{ post[1] }}</h1>
+                    <p class="blog-date">Published on {{ post[4] }}</p>
+                </header>
+
+                {% if post[3] %}
+                <div class="blog-image-container">
+                    <img src="{{ url_for('static', filename=post[3]) }}" alt="Blog Image" class="blog-detail-image">
+                </div>
+                {% endif %}
+
+                <div class="blog-content">
+                    <p>{{ post[2] }}</p>
+                </div>
+
+                {% if admin %}
+                <div class="admin-actions">
+                    <form method="POST" action="/delete/{{ post[0] }}" onsubmit="return confirm('Are you sure you want to delete this post?')">
+                        <button type="submit" class="delete-button">Delete Post</button>
+                    </form>
+                </div>
+                {% endif %}
+
+                <div class="back-to-blog">
+                    <a href="/#blog" class="back-link">← Back to Blog</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://www.instagram.com/the.eczema.project" target="_blank" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"></path>
+                    </svg>
+                </a>
+            </div>
+            <p class="copyright">©2025 The Eczema Project. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

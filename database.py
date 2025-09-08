@@ -45,11 +45,19 @@ def delet_posts(post_id):
     con.close()
     
 def search(search_query):
-    con=sqlite3.connect("database.db")
-    cur=con.cursor()
-    cur.execute("SELECT id, title, content, image time FROM posts WHERE title LIKE ? ORDER BY time DESC" ,('%'+search_query+'%' ,))
-    result=cur.fetchall()
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    cur.execute(
+        """SELECT id, title, content, image, time 
+           FROM posts 
+           WHERE title LIKE ? OR content LIKE ? 
+           ORDER BY time DESC""",
+        ('%' + search_query + '%', '%' + search_query + '%')
+    )
+    result = cur.fetchall()
+    con.close()
     return result
+
 
 
 def add_project(title , Content , image=None ,pdf=None ,audio=None):

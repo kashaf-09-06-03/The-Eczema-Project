@@ -3,14 +3,16 @@ from flask import render_template, request, redirect, url_for, session
 from database import create_table, add_posts, get_posts, delet_posts, search, add_project, get_project, delete_project
 import os
 from werkzeug.utils import secure_filename
+import sqlite3
 
 app = Flask(__name__)
 create_table()
 app.secret_key = "A(K>2V)QBNP),@#81ado?<welb++Qq"
 
 # Folder setup
-app.config["UPLOAD_BLOGS"] = "static/UPLOADBLOGS"
-app.config["UPLOAD_PROJECTS"] = "static/UPLOADPROJECTS"
+app.config["UPLOAD_BLOGS"] = os.path.join(app.root_path, "static", "UPLOADBLOGS")
+app.config["UPLOAD_PROJECTS"] = os.path.join(app.root_path, "static", "UPLOADPROJECTS")
+
 
 # Auto-create folders if missing
 os.makedirs(app.config["UPLOAD_BLOGS"], exist_ok=True)
@@ -117,6 +119,35 @@ def delete_projects(post_id):
     if session.get("is_admin"):
         delete_project(post_id=post_id)
     return redirect(url_for("main"))
+
+    
+
+@app.route("/blog/<int:post_id>")
+def blog_detail(post_id):
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    cur.execute("SELECT id, title, content, image, time FROM posts WHERE id=?", (post_id,))
+    post = cur.fetchone()
+    con.close()
+    
+    if post:
+        return render_template("blog_detail.html", post=post, admin=session.get("is_admin"))
+    else:
+        return redirect(url_for("main"))
+    
+    
+@app.route("/project/<int:project_id>")
+def project_detail(project_id):
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    cur.execute("SELECT id, title, CONTENT, image_path, pdf_path, audio_path, time FROM projects WHERE id=?", (project_id,))
+    project = cur.fetchone()
+    con.close()
+    
+    if project:
+        return render_template("project_detail.html", project=project, admin=session.get("is_admin"))
+    else:
+        return redirect(url_for("main"))
 
 
 if __name__ == "__main__":
