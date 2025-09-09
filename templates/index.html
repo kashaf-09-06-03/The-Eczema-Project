@@ -116,7 +116,7 @@
         {% if PROJECT|length == 0 %}
             <!-- Show placeholder if no projects yet -->
             <article class="project-card">
-                <div class="project-image" style="background-image: url('/static/uploads/poster2.png')"></div>
+                <div class="project-image" style="background-image: url('/static/uploads/1.png')"></div>
                 <div class="project-info">
                     <h3 class="project-title">Our Projects coming soon!</h3>
                     <p class="project-description">Look forward to Projects related to eczema and relevant care soon!</p>
@@ -142,43 +142,56 @@
     </div>
 
     {% if admin %}
-    <!-- Admin Add Project Form -->
-    <form method="POST" enctype="multipart/form-data" action="/addproject">
+<button onclick="toggleForm('projectForm')" class="admin-button">Add New Project</button>
+<button onclick="toggleForm('blogForm')" class="admin-button">Add New Blog</button>
+{% endif %}
+
+
+<!-- Admin Project Section -->
+{% if admin %}
+<div class="admin-section hidden" id="projectForm">
+    <h3 class="admin-title">Add a New Project</h3>
+    <form method="POST" enctype="multipart/form-data" action="/addproject" class="admin-form">
         <label>Title</label>
-        <input type="text" name="title" required>
-        <br>
+        <input type="text" name="title" required class="form-input">
+
         <label>Content</label>
-        <textarea name="content"></textarea>
-        <br>
-        <label>Upload image</label>
-        <input type="file" name="image" accept="image/*">
-        <br>
+        <textarea name="content" class="form-textarea"></textarea>
+
+        <label>Upload Image</label>
+        <input type="file" name="image" accept="image/*" class="form-input">
+
         <label>Upload Audio</label>
-        <input type="file" name="audio" accept="audio/*">
-        <br>
+        <input type="file" name="audio" accept="audio/*" class="form-input">
+
         <label>Upload PDF</label>
-        <input type="file" name="pdf" accept=".pdf">
-        <button type="submit">Submit</button>
+        <input type="file" name="pdf" accept=".pdf" class="form-input">
+
+        <button type="submit" class="admin-button">Submit Project</button>
     </form>
-    {% endif %}
-</section>
-<!-- Blog Section -->
-<section id="blog" class="section">
-    {% if admin %}
-        <form action="/" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="form_name" value="blog_form">
-            
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" required>
+</div>
+{% endif %}
 
-            <label for="content">Content</label>
-            <textarea id="content" name="content" required></textarea>
+<!-- Admin Blog Section -->
+{% if admin %}
+<div class="admin-section hidden" id="blogForm">
+    <h3 class="admin-title">Post a New Blog</h3>
+    <form action="/" method="POST" enctype="multipart/form-data" class="admin-form">
+        <input type="hidden" name="form_name" value="blog_form">
 
-            <input type="file" name="image" accept="image/*">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required class="form-input">
 
-            <button type="submit">Post Blog</button>
-        </form>
-    {% endif %}
+        <label for="content">Content</label>
+        <textarea id="content" name="content" required class="form-textarea"></textarea>
+
+        <label>Upload Image</label>
+        <input type="file" name="image" accept="image/*" class="form-input">
+
+        <button type="submit" class="admin-button">Post Blog</button>
+    </form>
+</div>
+{% endif %}
 
     <h2 class="section-title">Blog</h2>
 
@@ -212,7 +225,7 @@
         </div>
     {% endif %}
 </section>
-            <!-- Team Section -->
+        <!-- Team Section -->
             <section id="team" class="section">
                 <h2 class="section-title">Meet the Team</h2>
                 <div class="team-banner" style="background-image: url('static/uploads/banner.png')">
@@ -264,5 +277,82 @@
             <p class="copyright">©2025 The Eczema Project. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+function toggleForm(formId) {
+    const form = document.getElementById(formId);
+    form.classList.toggle('hidden');
+}
+</script>
+<!-- Modal HTML -->
+<div id="teamModal" class="team-modal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Team Member">
+        <div class="modal-info">
+            <h3 id="modalName"></h3>
+        </div>
+    </div>
+</div>
+
+<script>
+// JavaScript for team member modal (desktop only)
+function openModal(memberName, memberImage) {
+    // Only open modal if screen width is greater than 768px (not mobile)
+    if (window.innerWidth <= 768) {
+        return; // Do nothing on mobile devices
+    }
+    
+    const modal = document.getElementById('teamModal');
+    const modalImg = document.getElementById('modalImage');
+    const modalName = document.getElementById('modalName');
+    
+    modal.style.display = 'flex';
+    modalImg.src = memberImage;
+    modalName.textContent = memberName;
+    
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const modal = document.getElementById('teamModal');
+    modal.style.display = 'none';
+    
+    // Restore body scrolling
+    document.body.style.overflow = 'auto';
+}
+
+// Add click event listeners to team member images (desktop only)
+document.addEventListener('DOMContentLoaded', function() {
+    const teamMembers = [
+        { name: 'Kaitlyn', image: 'static/uploads/member1.png' },
+        { name: 'Alyssa', image: 'static/uploads/member2.png' },
+        { name: 'Avi', image: 'static/uploads/member3.png' },
+        { name: 'Prakriti', image: 'static/uploads/member4.png' },
+        { name: 'Jillian', image: 'static/uploads/member5.png' },
+        { name: 'Maira', image: 'static/uploads/member6.png' },
+        { name: 'Mia', image: 'static/uploads/member7.png' },
+        { name: 'Sophia', image: 'static/uploads/member8.png' }
+    ];
+    
+    const imgBoxes = document.querySelectorAll('.img-box');
+    
+    imgBoxes.forEach((box, index) => {
+        box.addEventListener('click', function() {
+            // Only add click functionality for desktop
+            if (window.innerWidth > 768 && teamMembers[index]) {
+                openModal(teamMembers[index].name, teamMembers[index].image);
+            }
+        });
+    });
+});
+
+// Close modal when pressing Escape key (desktop only)
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && window.innerWidth > 768) {
+        closeModal();
+    }
+});
+</script>
 </body>
 </html>
